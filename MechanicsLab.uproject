@@ -1,0 +1,22 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{D203C03E-4401-7B94-21B1-848B5FF76BBC}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "MechanicsLab",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		}
+	]
+}
