@@ -15,12 +15,13 @@ AMLHeroCharacter::AMLHeroCharacter()
 
 	// 캐릭터 회전이 컨트롤러(마우스) 회전을 따라가지 않게
 	bUseControllerRotationPitch = false;
-	bUseControllerRotationYaw = false;
+	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = false;
 
 	// 캐릭터가 움직이는 방향으로 자연스럽게 회전
-	GetCharacterMovement()->bOrientRotationToMovement = true; 
+	GetCharacterMovement()->bOrientRotationToMovement = false; 
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 360.0f, 0.0f); // 회전 속도 조절
+	GetCharacterMovement()->MaxWalkSpeed = 300.f;
 
 	
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
@@ -58,6 +59,12 @@ void AMLHeroCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 		{
 			EnhancedInputComponent->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &AMLHeroCharacter::Zoom);
 		}
+
+		if (SprintAction)
+		{
+			EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this, &AMLHeroCharacter::StartSprint);
+			EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AMLHeroCharacter::EndSprint);
+		}
 	}
 	
 }	
@@ -92,7 +99,7 @@ void AMLHeroCharacter::Look(const FInputActionValue& InputActionValue)
 	}
 }
 
-void AMLHeroCharacter::Zoom(const FInputActionValue& InputActionValue)
+void AMLHeroCharacter::Zoom(const FInputActionValue& InputActionValue) 
 {
 	const FVector ZoomAxisValue = InputActionValue.Get<FVector>();
 
@@ -104,3 +111,13 @@ void AMLHeroCharacter::Zoom(const FInputActionValue& InputActionValue)
 	}
 	
 }
+void AMLHeroCharacter::StartSprint(const FInputActionValue& InputActionValue) 
+{
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+}
+
+void AMLHeroCharacter::EndSprint(const FInputActionValue& InputActionValue) 
+{
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+}
+

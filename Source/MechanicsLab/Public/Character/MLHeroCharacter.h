@@ -11,6 +11,7 @@ class UInputMappingContext;
 class UInputAction;
 class USpringArmComponent;
 class UCameraComponent;
+class UMLCombatComponent;
 /**
  * 
  */
@@ -29,13 +30,22 @@ protected:
 	virtual void PossessedBy(AController* NewController) override;
 	/* Input */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	
 	
 	void Move(const FInputActionValue& InputActionValue);
 	void Look(const FInputActionValue& InputActionValue);
 	void Zoom(const FInputActionValue& InputActionValue);
+	void StartSprint(const FInputActionValue& InputActionValue);
+	void EndSprint(const FInputActionValue& InputActionValue);
 	/* Input */
+
+	bool bSprint = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Movement")
+	float WalkSpeed = 300.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Movement")
+	float SprintSpeed = 600.0f;
+	
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Input")
@@ -49,6 +59,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> ZoomAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> SprintAction;
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<USpringArmComponent> SpringArm;
@@ -64,6 +77,9 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Zoom")
 	float ZoomSpeed = 1.f;
+
+	UPROPERTY()
+	TObjectPtr<UMLCombatComponent> CombatComponent;
 	
 	
 };
