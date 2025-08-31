@@ -2,7 +2,7 @@
 
 
 #include "Character/MLCharacterBase.h"
-
+#include "Component/MLCombatComponent.h"
 
 // Sets default values
 AMLCharacterBase::AMLCharacterBase()

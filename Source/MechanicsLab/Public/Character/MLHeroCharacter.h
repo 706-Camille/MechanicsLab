@@ -11,7 +11,7 @@ class UInputMappingContext;
 class UInputAction;
 class USpringArmComponent;
 class UCameraComponent;
-class UMLCombatComponent;
+
 /**
  * 
  */
@@ -77,9 +77,7 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Zoom")
 	float ZoomSpeed = 1.f;
-
-	UPROPERTY()
-	TObjectPtr<UMLCombatComponent> CombatComponent;
+	
 	
 	
 };

@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "MLCharacterBase.generated.h"
 
+class UMLCombatComponent;
+
 UCLASS()
 class MECHANICSLAB_API AMLCharacterBase : public ACharacter
 {
@@ -25,6 +27,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UMLCombatComponent> CombatComponent;
 
 	
 	

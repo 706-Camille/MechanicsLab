@@ -2,6 +2,9 @@
 
 
 #include "Component/MLCombatComponent.h"
+#include "Ability/MLAbilityBase.h"
+#include "NativeGameplayTags.h"
+#include "Character/MLCharacterBase.h"
 
 
 // Sets default values for this component's properties
@@ -14,6 +17,19 @@ UMLCombatComponent::UMLCombatComponent()
 	// ...
 }
 
+
+void UMLCombatComponent::ActivateAbilityByTag(FGameplayTag Tag)
+{
+	for (UMLAbilityBase* Ability : Abilities)
+	{
+		if (Ability && Ability->AbilityTag == Tag)
+		{
+			// 쿨다운, 스태미나 체크 등 추가 가능
+			Ability->Activate(Cast<AMLCharacterBase>(GetOwner()));
+			break;
+		}
+	}
+}
 
 // Called when the game starts
 void UMLCombatComponent::BeginPlay()
@@ -31,5 +47,10 @@ void UMLCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UMLCombatComponent::ActivateAbility()
+{
+	
 }
 
