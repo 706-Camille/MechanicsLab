@@ -15,7 +15,7 @@ UMLCombatComponent::UMLCombatComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
-}
+}	
 
 
 void UMLCombatComponent::ActivateAbilityByTag(FGameplayTag Tag)
@@ -25,11 +25,13 @@ void UMLCombatComponent::ActivateAbilityByTag(FGameplayTag Tag)
 		if (Ability && Ability->AbilityTag == Tag)
 		{
 			// 쿨다운, 스태미나 체크 등 추가 가능
-			Ability->Activate(Cast<AMLCharacterBase>(GetOwner()));
+			
+			Ability->ActivateAbility(ActorInfo, FAbilityDef(Ability->GetClass()));
 			break;
 		}
 	}
 }
+
 
 // Called when the game starts
 void UMLCombatComponent::BeginPlay()
@@ -40,6 +42,59 @@ void UMLCombatComponent::BeginPlay()
 	
 }
 
+void UMLCombatComponent::InitAbilityActorInfo(AActor* InOwnerActor, APawn* InAvatarActor)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "InitAbilityActorInfo");
+	
+	ActorInfo.OwnerActor = InOwnerActor;
+	ActorInfo.AvatarActor = InAvatarActor;
+	ActorInfo.CombatComponent = MakeWeakObjectPtr(this);
+	ActorInfo.Controller = nullptr;
+}
+
+
+void UMLCombatComponent::GrantAbility()
+{
+
+	for (TSubclassOf<UMLAbilityBase> AbilityClass : AbilityClasses)
+	{
+		if (!AbilityClass) continue;
+
+		UMLAbilityBase* Ability = NewObject<UMLAbilityBase>(this, AbilityClass);
+		Ability->ActorInfo = ActorInfo;
+
+		Abilities.Add(Ability);
+	}
+ 
+}
+
+
+bool UMLCombatComponent::TryActivateAbilityByClass(TSubclassOf<UMLAbilityBase> InAbilityToActivate)
+{
+	if (InAbilityToActivate)
+	{
+		UMLAbilityBase* AbilityToActivate = CastChecked<UMLAbilityBase>(InAbilityToActivate);
+		AbilityToActivate->ActivateAbility(ActorInfo, FAbilityDef(InAbilityToActivate->GetClass()));
+	}
+
+	return true;
+}
+
+
+bool UMLCombatComponent::TryActivateAbilityByTag(const FGameplayTag& InAbilityTag)
+{
+	for (UMLAbilityBase* Ability : Abilities)
+	{
+		if (Ability && Ability->AbilityTag.MatchesTagExact(InAbilityTag))
+		{
+			
+			Ability->ActivateAbility(ActorInfo,FAbilityDef(Ability->GetClass()));
+			return true;
+		}
+	}
+
+	return false;
+}
 
 // Called every frame
 void UMLCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -47,10 +102,5 @@ void UMLCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
-}
-
-void UMLCombatComponent::ActivateAbility()
-{
-	
 }
 

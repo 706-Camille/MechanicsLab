@@ -4,16 +4,14 @@
 
 #include "CoreMinimal.h"
 
-
 /**
  * 
  */
-class MECHANICSLAB_API UMLAttributeSet
+
+class MECHANICSLAB_API MLCombatEffect
 {
+
 public:
-
-protected:
-
-private:
-
+	MLCombatEffect();
+	~MLCombatEffect();
 };

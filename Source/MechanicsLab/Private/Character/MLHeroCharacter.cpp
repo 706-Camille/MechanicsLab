@@ -15,11 +15,11 @@ AMLHeroCharacter::AMLHeroCharacter()
 
 	// 캐릭터 회전이 컨트롤러(마우스) 회전을 따라가지 않게
 	bUseControllerRotationPitch = false;
-	bUseControllerRotationYaw = true;
+	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
 	// 캐릭터가 움직이는 방향으로 자연스럽게 회전
-	GetCharacterMovement()->bOrientRotationToMovement = false; 
+	GetCharacterMovement()->bOrientRotationToMovement = true; 
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 360.0f, 0.0f); // 회전 속도 조절
 	GetCharacterMovement()->MaxWalkSpeed = 300.f;
 
