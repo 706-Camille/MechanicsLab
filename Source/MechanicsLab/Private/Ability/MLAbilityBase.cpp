@@ -3,6 +3,8 @@
 
 #include "Ability/MLAbilityBase.h"
 
+#include "GameFramework/Character.h"
+
 
 void UMLAbilityBase::InitializeAbility(const FAbilityActorInfo& InAbilityActorInfo)
 {
@@ -16,6 +18,8 @@ void UMLAbilityBase::ActivateAbility_Implementation(const FAbilityActorInfo& InA
 void UMLAbilityBase::EndAbility_Implementation(const FAbilityActorInfo& InActorInfo, const FAbilityDef& InAbilityDef)
 {
 }
+
+
 
 UMLCombatComponent* UMLAbilityBase::GetCombatComponentFromActorInfo() const
 {

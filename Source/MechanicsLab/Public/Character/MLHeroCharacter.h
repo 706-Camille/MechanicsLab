@@ -24,6 +24,8 @@ public:
 	AMLHeroCharacter();
 	TObjectPtr<UInputMappingContext> GetMappingContext() {return InputMappingContext;}
 
+	virtual void InitCombatActorInfo() override;
+
 protected:
 
 

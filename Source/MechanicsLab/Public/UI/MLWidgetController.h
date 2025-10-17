@@ -45,7 +45,7 @@ class MECHANICSLAB_API UMLWidgetController : public UObject
 	
 public:
 	virtual void BroadcastInitialValues();
-	virtual void BindCallbackToAttributeComponent();
+	virtual void BindCallbackToAttributes();
 	void SetWidgetControllerParams(const FWidgetControllerParams& InWidgetControllerParams);
 	
 	

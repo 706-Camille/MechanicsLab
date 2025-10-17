@@ -9,16 +9,24 @@
 /**
  * 
  */
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 
 UCLASS()
 class MECHANICSLAB_API UMLOverlayWidgetController : public UMLWidgetController
 {
 	GENERATED_BODY()
 
+public:
 	virtual void BroadcastInitialValues() override;
-	virtual void BindCallbackToAttributeComponent() override;
-	
-	
+	virtual void BindCallbackToAttributes() override;
+
+	UPROPERTY(BlueprintAssignable, Category = "Attributes")
+	FOnAttributeChangedSignature OnMaxHPChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "Attributes")
+	FOnAttributeChangedSignature OnHPChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "Attributes")
+	FOnAttributeChangedSignature OnStrengthChanged;
 	
 };

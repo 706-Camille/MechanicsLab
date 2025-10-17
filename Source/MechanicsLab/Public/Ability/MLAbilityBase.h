@@ -66,7 +66,7 @@ public:
 	void EndAbility(const FAbilityActorInfo& InActorInfo, const FAbilityDef& InAbilityDef);
 
 	virtual void EndAbility_Implementation(const FAbilityActorInfo& InActorInfo, const FAbilityDef& InAbilityDef);
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Ability")
 	UMLCombatComponent* GetCombatComponentFromActorInfo() const;
 

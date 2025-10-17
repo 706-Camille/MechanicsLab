@@ -18,6 +18,7 @@ void UMLAttributeComponent::GetLifetimeReplicatedProps(TArray<class FLifetimePro
 	
 	DOREPLIFETIME(ThisClass, MaxHP);
 	DOREPLIFETIME(ThisClass, HP);
+	DOREPLIFETIME(ThisClass, Strength);
 }
 
 

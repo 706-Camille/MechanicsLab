@@ -11,6 +11,8 @@ class UMLWidgetController;
 class UMLAttributeComponent;
 class UMLCombatComponent;
 class UMLOverlayWidgetController;
+class UUserWidget;
+struct FWidgetControllerParams;
 
 
 /**
@@ -37,7 +39,7 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<UMLWidget> OverlayWidgetClass;
+	TSubclassOf<UUserWidget> OverlayWidgetClass;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UMLWidgetController> OverlayWidgetControllerClass;

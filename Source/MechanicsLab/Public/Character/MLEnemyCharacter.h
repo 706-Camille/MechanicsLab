@@ -13,8 +13,7 @@ UCLASS()
 class MECHANICSLAB_API AMLEnemyCharacter : public AMLCharacterBase
 {
 	GENERATED_BODY()
-	
-	
-	
+
+	virtual void InitCombatActorInfo() override;
 	
 };

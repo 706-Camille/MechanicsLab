@@ -12,9 +12,9 @@
 	const Type& Get##Name() const { return Name;}\
 	void Set##Name(const Type& Value) { Name = Value; }
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHPChanged, float, NewValue);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHPChanged, float, NewValue);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStrengthChanged, float, NewValue);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnHPChanged, float);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMaxHPChanged, float);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnStrengthChanged, float);
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -22,14 +22,7 @@ class MECHANICSLAB_API UMLAttributeComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-	MAKE_GETTER_AND_SETTER(float, BaseMaxHP);
-	MAKE_GETTER_AND_SETTER(float, MaxHP);
-	MAKE_GETTER_AND_SETTER(float, BaseHP);
-	MAKE_GETTER_AND_SETTER(float, HP);
-	MAKE_GETTER_AND_SETTER(float, BaseStrength);
-	MAKE_GETTER_AND_SETTER(float, Strength);
 	
-
 public:
 	UMLAttributeComponent();
 
@@ -41,17 +34,33 @@ public:
 	void OnRep_HP();
 	UFUNCTION()
 	void OnRep_Strength();
+	
+public:
+	/* Attributes Getter */
+	const float& GetBaseMaxHP() const {return BaseMaxHP;} 
+	const float& GetMaxHP() const {return MaxHP;}
+	const float& GetBaseHP() const {return BaseHP;}
+	const float& GetHP() const {return HP;}
+	const float& GetBaseStrength() const {return BaseStrength;}
+	const float& GetStrength() const {return Strength;}
+	
+	/* Attributes Setter */
+	void SetBaseMaxHP(const float& Value){BaseMaxHP = Value;}
+	void SetMaxHP(const float& Value){MaxHP = Value;}
+	void SetBaseHP(const float& Value){BaseHP = Value;}
+	void SetHP(const float& Value){HP = Value;}
+	void SetBaseStrength(const float& Value){BaseStrength = Value;}
+	void SetStrength(const float& Value){Strength = Value;}
 
 protected:
 		
-	UPROPERTY(Replicated, Transient, EditAnywhere, BlueprintReadOnly, Category = "Attribute")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Attribute")
 	float BaseMaxHP;
 
 	UPROPERTY(ReplicatedUsing = OnRep_MaxHP, EditAnywhere, BlueprintReadOnly, Category = "Attribute")
 	float MaxHP;
-
-
-	UPROPERTY(Replicated, Transient, EditAnywhere, BlueprintReadOnly, Category = "Attribute")
+	
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Attribute")
 	float BaseHP;
 	
 	UPROPERTY(ReplicatedUsing = OnRep_HP, EditAnywhere, BlueprintReadOnly, Category = "Attribute")
@@ -65,13 +74,8 @@ protected:
 	
 
 public:
-	UPROPERTY(BlueprintAssignable)
 	FOnMaxHPChanged OnMaxHPChanged;
-	
-	UPROPERTY(BlueprintAssignable)
 	FOnHPChanged OnHPChanged;
-
-	UPROPERTY(BlueprintAssignable)
 	FOnHPChanged OnStrengthChanged;
 	
 };

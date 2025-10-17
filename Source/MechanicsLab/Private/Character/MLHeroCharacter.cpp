@@ -5,8 +5,10 @@
 #include "EnhancedInputComponent.h"
 #include "InputAction.h"
 #include "Camera/CameraComponent.h"
+#include "Component/MLCombatComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Player/MLPlayerState.h"
 
 
 AMLHeroCharacter::AMLHeroCharacter()
@@ -34,9 +36,16 @@ AMLHeroCharacter::AMLHeroCharacter()
 	Camera->bUsePawnControlRotation = false; // 카메라는 스프링암을 따라가기만 하면 되므로 false 입니다.
 }
 
+void AMLHeroCharacter::InitCombatActorInfo()
+{
+	CombatComponent->InitCombatActorInfo(this, this, GetController());
+}
+
 void AMLHeroCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
+	
+	InitCombatActorInfo();
 }
 
 void AMLHeroCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)

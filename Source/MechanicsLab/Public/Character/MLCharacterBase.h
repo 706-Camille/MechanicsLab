@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "MLCharacterBase.generated.h"
 
+class UMLAttributeComponent;
 class UMLCombatComponent;
 
 UCLASS()
@@ -17,6 +18,12 @@ public:
 	// Sets default values for this character's properties
 	AMLCharacterBase();
 
+	/** Getter */
+	FORCEINLINE UMLCombatComponent* GetCombatComponent() const { return CombatComponent; }
+	FORCEINLINE UMLAttributeComponent* GetAttributeComponent() const { return AttributeComponent; }
+	
+	virtual void InitCombatActorInfo();
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -28,11 +35,17 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	
+	/** Combat Component */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UMLCombatComponent> CombatComponent;
 
-
+	/** Attribute Component */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UMLAttributeComponent> AttributeComponent;
 
 	
+
 	
+		
 };

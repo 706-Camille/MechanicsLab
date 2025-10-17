@@ -4,5 +4,6 @@
 #include "Character/MLEnemyCharacter.h"
 
 
-
-
+void AMLEnemyCharacter::InitCombatActorInfo()
+{
+}

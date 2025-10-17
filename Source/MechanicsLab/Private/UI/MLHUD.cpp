@@ -7,6 +7,7 @@
 #include "UI/MLOverlayWidgetController.h"
 
 
+
 UMLOverlayWidgetController* AMLHUD::GetOverlayWidgetController(const FWidgetControllerParams& InWidgetControllerParams)
 {
 	
@@ -27,7 +28,7 @@ void AMLHUD::InitOverlay(APlayerController* InPlayerController, APlayerState* In
 	checkf(OverlayWidgetClass, TEXT("OverlayWidgetClass is null, It is assigned in BP_MLHUD"));
 
 
-	UUserWidget* Widget =  CreateWidget<UUserWidget>(this, OverlayWidgetClass);
+	UUserWidget* Widget =  CreateWidget<UUserWidget>(InPlayerController, OverlayWidgetClass);
 	OverlayWidget = Cast<UMLWidget>(Widget);
 	const FWidgetControllerParams WidgetControllerParams(InPlayerController, InPlayerState, InCombatComponent,InAttributeComponent);
 	OverlayWidgetController = GetOverlayWidgetController(WidgetControllerParams);

@@ -11,7 +11,7 @@ void UMLWidgetController::BroadcastInitialValues()
 {
 }
 
-void UMLWidgetController::BindCallbackToAttributeComponent()
+void UMLWidgetController::BindCallbackToAttributes()
 {
 }
 

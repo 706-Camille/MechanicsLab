@@ -8,12 +8,30 @@
 
 void UMLOverlayWidgetController::BroadcastInitialValues()
 {
-	
+	OnHPChanged.Broadcast(AttributeComponent->GetHP());
+	OnMaxHPChanged.Broadcast(AttributeComponent->GetMaxHP());
+	OnStrengthChanged.Broadcast(AttributeComponent->GetStrength());
 }
 
-void UMLOverlayWidgetController::BindCallbackToAttributeComponent()
+void UMLOverlayWidgetController::BindCallbackToAttributes()
 {
 	checkf(AttributeComponent, TEXT("Missing AttributeComponent in UMLOverlayWidgetController"));
 
-	// TODO : 속성들 콜백함수 연결
+	AttributeComponent->OnMaxHPChanged.AddLambda([this](float Value)
+		{
+			OnMaxHPChanged.Broadcast(Value);
+		}
+	);
+
+	AttributeComponent->OnHPChanged.AddLambda([this](float Value)
+		{
+			OnHPChanged.Broadcast(Value);
+		}
+	);
+
+	AttributeComponent->OnStrengthChanged.AddLambda([this](float Value)
+		{
+			OnStrengthChanged.Broadcast(Value);
+		}
+	);
 }
