@@ -134,9 +134,9 @@ bool UMLCombatComponent::ActivateAbilityByTag_Internal(const FGameplayTag& InAbi
 	return false;
 }
 
-void UMLCombatComponent::Server_PlayAttackMontage_Implementation(ACharacter* TargetCharacter, UAnimMontage* Montage, const float PlayRate = 1.0f)
+void UMLCombatComponent::Server_PlayAttackMontage_Implementation(ACharacter* TargetCharacter, UAnimMontage* Montage, const float InPlayRate = 1.0f)
 {
-	Multicast_PlayAttackMontage(TargetCharacter, Montage, PlayRate);
+	Multicast_PlayAttackMontage(TargetCharacter, Montage, InPlayRate);
 }
 
 void UMLCombatComponent::Multicast_PlayAttackMontage_Implementation(ACharacter* TargetCharacter, UAnimMontage* Montage, const float InPlayRate = 1.0f)

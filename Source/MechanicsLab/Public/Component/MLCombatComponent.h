@@ -63,7 +63,7 @@ protected:
 	bool ActivateAbilityByTag_Internal(const FGameplayTag& InAbilityTag);
 
 	UFUNCTION(Server, Reliable, BlueprintCallable)
-	void Server_PlayAttackMontage(ACharacter* TargetCharacter, UAnimMontage* Montage, const float PlayRate);
+	void Server_PlayAttackMontage(ACharacter* TargetCharacter, UAnimMontage* Montage, const float InPlayRate);
 	
 	UFUNCTION(NetMulticast, Reliable, BlueprintCallable)
 	void Multicast_PlayAttackMontage(ACharacter* TargetCharacter, UAnimMontage* Montage, const float InPlayRate);
