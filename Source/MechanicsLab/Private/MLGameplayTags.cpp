@@ -12,4 +12,9 @@ namespace MLGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Class_Warrior_Skill_SpinCharge, "Player.Class.Warrior.Skill.SpinCharge");
 
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Sword, "Player.Weapon.Sword");
+
+
+	//Enemy
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_HitReact, "Enemy.HitReact");
+	
 }

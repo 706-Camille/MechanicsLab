@@ -13,4 +13,9 @@ namespace MLGameplayTags
 	MECHANICSLAB_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Class_Warrior_Skill_SpinCharge);
 
 	MECHANICSLAB_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Sword);
+
+
+	// Enemy
+	MECHANICSLAB_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_HitReact);
+	
 }

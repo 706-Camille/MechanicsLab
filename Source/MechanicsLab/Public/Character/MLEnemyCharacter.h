@@ -10,10 +10,20 @@
  * 
  */
 UCLASS()
-class MECHANICSLAB_API AMLEnemyCharacter : public AMLCharacterBase
+class MECHANICSLAB_API AMLEnemyCharacter : public AMLCharacterBase, public IEnemyInterface
 {
 	GENERATED_BODY()
 
 	virtual void InitCombatActorInfo() override;
-	
+
+public:
+	/** Begin IEnemyInterface*/
+	virtual UAnimMontage* GetHitReactMontage_Implementation() const override;
+	/** End IEnemyInterface*/
+protected:
+	virtual void PossessedBy(AController* NewController) override;
+
+protected:
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UAnimMontage> HitReactMontage;
 };

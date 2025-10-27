@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interface/EnemyInterface.h"
 #include "MLCharacterBase.generated.h"
 
 class UMLAttributeComponent;
@@ -21,6 +22,9 @@ public:
 	/** Getter */
 	FORCEINLINE UMLCombatComponent* GetCombatComponent() const { return CombatComponent; }
 	FORCEINLINE UMLAttributeComponent* GetAttributeComponent() const { return AttributeComponent; }
+	/** End Getter*/
+
+	
 	
 	virtual void InitCombatActorInfo();
 	
@@ -43,9 +47,6 @@ public:
 	/** Attribute Component */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UMLAttributeComponent> AttributeComponent;
-
-	
-
 	
 		
 };
