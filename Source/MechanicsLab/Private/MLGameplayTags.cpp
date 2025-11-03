@@ -14,7 +14,10 @@ namespace MLGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Sword, "Player.Weapon.Sword");
 
 
-	//Enemy
+	// Enemy
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_HitReact, "Enemy.HitReact");
+
+	// Shared
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitTrace, "Shared.Event.HitTrace");
 	
 }

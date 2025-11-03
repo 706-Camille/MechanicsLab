@@ -17,5 +17,8 @@ namespace MLGameplayTags
 
 	// Enemy
 	MECHANICSLAB_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_HitReact);
+
+	// Shared
+	MECHANICSLAB_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitTrace);
 	
 }

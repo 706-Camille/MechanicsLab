@@ -20,21 +20,6 @@ UMLCombatComponent::UMLCombatComponent()
 }	
 
 
-void UMLCombatComponent::ActivateAbilityByTag(FGameplayTag Tag)
-{
-	for (UMLAbilityBase* Ability : Abilities)
-	{
-		if (Ability && Ability->AbilityTag == Tag)
-		{
-			// 쿨다운, 스태미나 체크 등 추가 가능
-			
-			Ability->ActivateAbility(ActorInfo, FAbilityDef(Ability->GetClass()));
-			break;
-		}
-	}
-}
-
-
 // Called when the game starts
 void UMLCombatComponent::BeginPlay()
 {
@@ -61,15 +46,6 @@ void UMLCombatComponent::InitCombatActorInfo(AActor* InOwnerActor, APawn* InAvat
 	ActorInfo.AvatarActor = InAvatarActor;
 	ActorInfo.CombatComponent = MakeWeakObjectPtr(this);
 	ActorInfo.Controller = InController;
-
-	for (UMLAbilityBase* Ability : Abilities)
-	{
-		if (Ability)
-		{
-			Ability->ActorInfo = ActorInfo;
-		}
-	}
-	
 }
 
 void UMLCombatComponent::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
@@ -79,6 +55,7 @@ void UMLCombatComponent::GetLifetimeReplicatedProps(TArray<class FLifetimeProper
 
 void UMLCombatComponent::InitializeDefaultAbilities()
 {
+	/*
 	if (!GetOwner()->HasAuthority()) return;
 	
 	for (TSubclassOf<UMLAbilityBase> AbilityClass : AbilityClasses)
@@ -88,6 +65,7 @@ void UMLCombatComponent::InitializeDefaultAbilities()
 		UMLAbilityBase* Ability = NewObject<UMLAbilityBase>(this, AbilityClass);
 		Abilities.Add(Ability);
 	}
+	*/
  
 }
 
@@ -103,17 +81,7 @@ bool UMLCombatComponent::TryActivateAbilityByTag(const FGameplayTag& InAbilityTa
 		return true;
 	}
 	
-	for (UMLAbilityBase* Ability : Abilities)
-	{
-		if (Ability && Ability->AbilityTag.MatchesTagExact(InAbilityTag))
-		{
-			
-			Ability->ActivateAbility(ActorInfo,FAbilityDef(Ability->GetClass()));
-			return true;
-		}
-	}
-
-	return false;
+	return ActivateAbilityByTag_Internal(InAbilityTag);
 }
 
 void UMLCombatComponent::ServerTryActivateAbilityByTag_Implementation(const FGameplayTag& InAbilityTag)
@@ -123,16 +91,59 @@ void UMLCombatComponent::ServerTryActivateAbilityByTag_Implementation(const FGam
 
 bool UMLCombatComponent::ActivateAbilityByTag_Internal(const FGameplayTag& InAbilityTag)
 {
-	for (UMLAbilityBase* Ability : Abilities)
+	for (TSubclassOf<UMLAbilityBase> AbilityClass : AbilityClasses)
 	{
-		if (Ability && Ability->AbilityTag.MatchesTagExact(InAbilityTag))
+		if (!AbilityClass) continue;
+		
+		const UMLAbilityBase* AbilityCDO = AbilityClass->GetDefaultObject<UMLAbilityBase>();
+
+		if (AbilityCDO && AbilityCDO->AbilityTag.MatchesTagExact(InAbilityTag))
 		{
-			Ability->ActivateAbility(ActorInfo, FAbilityDef(Ability->GetClass()));
-			return true;
+			if (UMLAbilityBase* NewAbilityInstance = NewObject<UMLAbilityBase>(this, AbilityClass))
+			{
+				NewAbilityInstance->InitializeAbility(ActorInfo);
+				ActiveAbilities.Add(NewAbilityInstance);
+				NewAbilityInstance->ActivateAbility(ActorInfo, FAbilityDef(AbilityClass));
+				return true; // 활성화 성공
+			}
 		}
 	}
+    
 	return false;
 }
+
+void UMLCombatComponent::NotifyAbilityEnded(UMLAbilityBase* EndedAbility)
+{
+	if (EndedAbility)
+	{
+		const int32 NumRemoved = ActiveAbilities.Remove(EndedAbility);
+
+		if (NumRemoved > 0)
+		{
+			// 성공 로그 (흰색)
+			UE_LOG(LogTemp, Log, TEXT("[%s] Ability %s removed from ActiveAbilities."), 
+				*GetOwner()->GetName(), 
+				*EndedAbility->GetName());
+		}
+		else
+		{
+			// 실패 로그 (빨간색)
+			UE_LOG(LogTemp, Error, TEXT("[%s] NotifyAbilityEnded: Failed to remove %s. Was it already removed or never added?"), 
+				*GetOwner()->GetName(), 
+				*EndedAbility->GetName());
+		}
+	}
+}
+
+void UMLCombatComponent::SendCombatEvent(FGameplayTag EventTag)
+{
+	if (GetOwner()->HasAuthority())
+	{
+		OnCombatEvent.Broadcast(EventTag);
+	}
+	
+}
+
 
 void UMLCombatComponent::Server_PlayAttackMontage_Implementation(ACharacter* TargetCharacter, UAnimMontage* Montage, const float InPlayRate = 1.0f)
 {
