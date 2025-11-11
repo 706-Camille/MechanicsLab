@@ -28,6 +28,7 @@ public:
 	TObjectPtr<UMLWidget> OverlayWidget;
 	
 	UMLOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& InWidgetControllerParams);
+	
 	void InitOverlay(
 		APlayerController* InPlayerController,
 		APlayerState* InPlayerState,
@@ -43,10 +44,10 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UMLWidgetController> OverlayWidgetControllerClass;
-
-	UPROPERTY(EditAnywhere)
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="UI")
 	TObjectPtr<UMLOverlayWidgetController> OverlayWidgetController;
 	
 	
 	
-};
+};	

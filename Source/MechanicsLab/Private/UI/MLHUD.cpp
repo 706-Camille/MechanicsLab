@@ -13,9 +13,8 @@ UMLOverlayWidgetController* AMLHUD::GetOverlayWidgetController(const FWidgetCont
 	
 	if (OverlayWidgetController == nullptr)
 	{
-		OverlayWidgetController = NewObject<UMLOverlayWidgetController>(this, OverlayWidgetClass);
+		OverlayWidgetController = NewObject<UMLOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(InWidgetControllerParams);
-		//
 	}
 
 	return OverlayWidgetController;

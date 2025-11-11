@@ -8,7 +8,9 @@
 #include "Component/MLCombatComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "PLayer/MLPlayerController.h"
 #include "Player/MLPlayerState.h"
+#include "UI/MLHUD.h"
 
 
 AMLHeroCharacter::AMLHeroCharacter()
@@ -39,6 +41,14 @@ AMLHeroCharacter::AMLHeroCharacter()
 void AMLHeroCharacter::InitCombatActorInfo()
 {
 	CombatComponent->InitCombatActorInfo(this, this, GetController());
+
+	if (AMLPlayerController* MLPlayerController = Cast<AMLPlayerController>(GetController()))
+	{
+		if (AMLHUD* HUD = Cast<AMLHUD>(MLPlayerController->GetHUD()))
+		{
+			HUD->InitOverlay(MLPlayerController, GetPlayerState(), CombatComponent, AttributeComponent);
+		}
+	}
 }
 
 void AMLHeroCharacter::PossessedBy(AController* NewController)
@@ -120,6 +130,7 @@ void AMLHeroCharacter::Zoom(const FInputActionValue& InputActionValue)
 	}
 	
 }
+	
 void AMLHeroCharacter::StartSprint(const FInputActionValue& InputActionValue) 
 {
 	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;

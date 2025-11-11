@@ -158,6 +158,8 @@ void UMLCombatComponent::Multicast_PlayAttackMontage_Implementation(ACharacter* 
 	{
 		Anim->Montage_Play(Montage, InPlayRate); // Rate = 1.f
 	}
+
+	
 }
 
 

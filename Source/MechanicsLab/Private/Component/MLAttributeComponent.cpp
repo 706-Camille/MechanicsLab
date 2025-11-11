@@ -36,3 +36,15 @@ void UMLAttributeComponent::OnRep_Strength()
 {
 	OnStrengthChanged.Broadcast(GetStrength());
 }
+
+void UMLAttributeComponent::OnRep_Damage()
+{
+}
+
+void UMLAttributeComponent::OnRep_Defense()
+{
+}
+
+void UMLAttributeComponent::OnRep_CriticalChance()
+{
+}

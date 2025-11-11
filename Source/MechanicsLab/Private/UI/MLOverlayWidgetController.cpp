@@ -28,10 +28,5 @@ void UMLOverlayWidgetController::BindCallbackToAttributes()
 			OnHPChanged.Broadcast(Value);
 		}
 	);
-
-	AttributeComponent->OnStrengthChanged.AddLambda([this](float Value)
-		{
-			OnStrengthChanged.Broadcast(Value);
-		}
-	);
+	
 }
