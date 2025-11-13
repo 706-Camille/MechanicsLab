@@ -2,6 +2,8 @@
 
 
 #include "UI/MLWidgetController.h"
+
+#include "Component/MLAttributeComponent.h"
 #include "PLayer/MLPlayerController.h"
 #include "Player/MLPlayerState.h"
 #include "Component/MLCombatComponent.h"

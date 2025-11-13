@@ -17,15 +17,15 @@ void UMLOverlayWidgetController::BindCallbackToAttributes()
 {
 	checkf(AttributeComponent, TEXT("Missing AttributeComponent in UMLOverlayWidgetController"));
 
-	AttributeComponent->OnMaxHPChanged.AddLambda([this](float Value)
+	AttributeComponent->OnMaxHPChanged.AddLambda([this](float NewValue)
 		{
-			OnMaxHPChanged.Broadcast(Value);
+			OnMaxHPChanged.Broadcast(NewValue);
 		}
 	);
 
-	AttributeComponent->OnHPChanged.AddLambda([this](float Value)
+	AttributeComponent->OnHPChanged.AddLambda([this](float NewValue)
 		{
-			OnHPChanged.Broadcast(Value);
+			OnHPChanged.Broadcast(NewValue);
 		}
 	);
 	

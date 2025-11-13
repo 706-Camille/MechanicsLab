@@ -11,7 +11,7 @@
  */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class MECHANICSLAB_API UMLOverlayWidgetController : public UMLWidgetController
 {
 	GENERATED_BODY()
