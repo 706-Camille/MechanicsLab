@@ -5,10 +5,12 @@
 #include "CoreMinimal.h"
 #include "Character/MLCharacterBase.h"
 #include "MLEnemyCharacter.generated.h"
-
 /**
  * 
  */
+
+class UMLWidgetController;
+
 UCLASS()
 class MECHANICSLAB_API AMLEnemyCharacter : public AMLCharacterBase, public IEnemyInterface
 {
@@ -26,4 +28,10 @@ protected:
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UAnimMontage> HitReactMontage;
+
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UMLWidgetController> WidgetController;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UMLWidgetController> WidgetControllerClass;
 };

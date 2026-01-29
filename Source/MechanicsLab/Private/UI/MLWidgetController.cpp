@@ -24,3 +24,10 @@ void UMLWidgetController::SetWidgetControllerParams(const FWidgetControllerParam
 	CombatComponent = InWidgetControllerParams.CombatComponent;
 	AttributeComponent = InWidgetControllerParams.AttributeComponent;
 }
+
+void UMLWidgetController::SetWidgetControllerParams(const FEnemyWidgetControllerParams& InWidgetControllerParams)
+{
+	OwnerActor = InWidgetControllerParams.EnemyActor;
+	CombatComponent = InWidgetControllerParams.CombatComponent;
+	AttributeComponent = InWidgetControllerParams.AttributeComponent;
+}

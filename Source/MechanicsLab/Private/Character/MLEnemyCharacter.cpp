@@ -2,12 +2,20 @@
 
 
 #include "Character/MLEnemyCharacter.h"
+
+#include "Blueprint/UserWidget.h"
 #include "Component/MLCombatComponent.h"
+#include "UI/MLEnemyWidgetController.h"
 
 
 void AMLEnemyCharacter::InitCombatActorInfo()
 {
+	checkf(WidgetControllerClass, TEXT("WidgetControllerClass is null, It is assigned in EnemyCharacter"));
 	CombatComponent->InitCombatActorInfo(this, this, GetController());
+	
+	WidgetController = NewObject<UMLEnemyWidgetController>(this, WidgetControllerClass);
+	const FEnemyWidgetControllerParams WidgetControllerParams(this, CombatComponent, AttributeComponent);
+	WidgetController->SetWidgetControllerParams(WidgetControllerParams);
 }
 
 UAnimMontage* AMLEnemyCharacter::GetHitReactMontage_Implementation() const

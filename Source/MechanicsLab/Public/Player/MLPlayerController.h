@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "MLPlayerController.generated.h"
 
+
+class UDamageTextComponent;
 /**
  * 
  */
@@ -16,5 +18,11 @@ class MECHANICSLAB_API AMLPlayerController : public APlayerController
 	
 	virtual void BeginPlay() override;
 	
+public:
+	UFUNCTION(Client, Reliable)
+	void ShowDamageNumber(float DamageAmount, ACharacter* TargetCharacter);
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
 	
 };

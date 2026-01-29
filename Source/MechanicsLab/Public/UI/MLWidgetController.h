@@ -38,6 +38,29 @@ struct FWidgetControllerParams
 	TObjectPtr<UMLAttributeComponent> AttributeComponent;
 	
 };
+
+USTRUCT(BlueprintType)
+struct FEnemyWidgetControllerParams
+{
+	GENERATED_BODY()
+
+	FEnemyWidgetControllerParams() {}
+	FEnemyWidgetControllerParams(AActor* InEnemyActor,
+		UMLCombatComponent* InCombatComponent,
+		UMLAttributeComponent* InAttributeComponent)
+		: EnemyActor(InEnemyActor),
+		  CombatComponent(InCombatComponent),
+		  AttributeComponent(InAttributeComponent) {}
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<AActor> EnemyActor;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UMLCombatComponent> CombatComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UMLAttributeComponent> AttributeComponent;
+};
 UCLASS()
 class MECHANICSLAB_API UMLWidgetController : public UObject
 {
@@ -47,14 +70,18 @@ public:
 	virtual void BroadcastInitialValues();
 	virtual void BindCallbackToAttributes();
 	void SetWidgetControllerParams(const FWidgetControllerParams& InWidgetControllerParams);
+	void SetWidgetControllerParams(const FEnemyWidgetControllerParams& InWidgetControllerParams);
 	
 	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<APlayerController> PlayerController;
+	TObjectPtr<AActor> OwnerActor = nullptr;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<APlayerState> PlayerState;
+	TObjectPtr<APlayerController> PlayerController = nullptr;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<APlayerState> PlayerState = nullptr; 
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UMLCombatComponent* CombatComponent = nullptr;

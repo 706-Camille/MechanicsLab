@@ -4,6 +4,7 @@
 #include "Player/MLPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "Character/MLHeroCharacter.h"
+#include "UI/Widget/DamageTextComponent.h"
 
 
 void AMLPlayerController::BeginPlay()
@@ -21,4 +22,17 @@ void AMLPlayerController::BeginPlay()
 		}
 	}
 	
+}
+
+void AMLPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter)
+{
+	if (IsValid(TargetCharacter) && DamageTextComponentClass)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ShowDamageNumber"));
+		UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetCharacter, DamageTextComponentClass);
+		DamageText->RegisterComponent();
+		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+		DamageText->SetDamageText(DamageAmount);
+	}
 }

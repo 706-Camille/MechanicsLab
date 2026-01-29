@@ -12,7 +12,31 @@
 	const Type& Get##Name() const { return Name;}\
 	void Set##Name(const Type& Value) { Name = Value; }
 
+USTRUCT(BlueprintType)
+struct FDamageInfo
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadWrite)
+	float DamageScale;
+	
+	UPROPERTY(BlueprintReadWrite)
+	float FinalDamage = 0.f;
+	
+	UPROPERTY(BlueprintReadWrite)
+	AActor* Instigator;
+	
+	
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsCritical = false;
+	
+	FDamageInfo(float InDamageScale = 1.0f, AActor* InInstigator = nullptr)
+		: DamageScale(InDamageScale), Instigator(InInstigator)
+	{}
+};
+
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnAttributeChanged, float);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnDamageTaken, const FDamageInfo&);
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -71,7 +95,18 @@ public:
 	void SetCriticalChance(const float& Value){CriticalChance = Value;}
 	void SetBaseDefense(const float& Value){BaseDefense = Value;}
 	void SetDefense(const float& Value){Defense = Value;}
-
+	
+	UFUNCTION(BlueprintCallable)
+	void TakeDamage(FDamageInfo DamageInfo);
+	void TakeDamage_Internal(FDamageInfo& DamageInfo);
+	
+	void CalculateDamage(FDamageInfo& DamageInfo);
+	bool IsCriticalHit();
+	
+	// Multicast Func
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastOnDamageTaken(const FDamageInfo& DamageInfo);
+	
 protected:
 		
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Attribute")
@@ -114,5 +149,6 @@ public:
 	FOnAttributeChanged OnDamageChanged;
 	FOnAttributeChanged OnCriticalChanceChanged;
 	FOnAttributeChanged OnDefenseChanged;
+	FOnDamageTaken      OnDamageTaken;
 	
 };
